@@ -1,0 +1,19 @@
+{
+  "name": "open-pixel-control",
+  "version": "0.0.0",
+  "description": "An open pixel control messaging library",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "OPC",
+    "open",
+    "pixel",
+    "control",
+    "RGB",
+    "LED"
+  ],
+  "author": "kperch",
+  "license": "MIT"
+}
