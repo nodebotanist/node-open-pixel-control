@@ -17,6 +17,5 @@
   "author": "kperch",
   "license": "MIT",
   "dependencies": {
-    "binaryjs": "^0.2.1"
   }
 }
