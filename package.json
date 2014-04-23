@@ -15,5 +15,8 @@
     "LED"
   ],
   "author": "kperch",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "binaryjs": "^0.2.1"
+  }
 }
