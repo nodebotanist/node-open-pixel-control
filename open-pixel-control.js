@@ -47,7 +47,7 @@ OPC.prototype.disconnect = function(){
   }
 };
 
-OPC.prototype.addStrip = function(opts){
+OPC.prototype.add_strip = function(opts){
   if(!opts.length){
     throw new Error('you need to specify a length for an LED strip');
   }
