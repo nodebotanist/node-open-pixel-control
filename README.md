@@ -25,10 +25,21 @@ Pixels are represented as an array of array with 3 int values between 0 and 255 
 
 ```
 client.on('connected', function(){
-  var strip_id = client.add_strip({
+  var strip = client.add_strip({
     length: 26
   });
+```
 
+client.put_pixel(strip_id, pixel_index, color_data) sets the pixel addressed to the color given (Added 0.0.2 :))
+
+```
+  client.put_pixel(strip.id, 0, [255, 255, 255]);
+
+```
+
+client.put_pixels(strip_id, pixels); sends the data to the OPC server. You send a full array of pixels with this one.
+
+```
   var pixels = [
       [255, 255, 255],
       [0, 0, 0],
@@ -57,21 +68,9 @@ client.on('connected', function(){
       [0, 0, 255],
       [255, 255, 255]
   ],
-    new_pixel;
-```
-
-client.put_pixel(strip_id, pixel_index, color_data) sets the pixel addressed to the color given (Added 0.0.2 :))
-
-```
-  client.put_pixel(strip_id, 0, [255, 255, 255]);
-
-```
-
-client.put_pixels(strip_id, pixels); sends the data to the OPC server. You send a full array of pixels with this one.
-
-```
+  new_pixel;
   setTimeout(function(){
-    client.put_pixels(strip_id, pixels);
+    client.put_pixels(strip.id, pixels);
     new_pixel = pixels[0];
     pixels = pixels.slice(1);
     pixels.push(new_pixel);
