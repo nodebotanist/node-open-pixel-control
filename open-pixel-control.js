@@ -59,16 +59,18 @@ OPC.prototype.add_strip = function(opts){
     new_pixels.push([0, 0, 0]);
   }
 
-  this.strips.push({
+  var strip_info = {
     id: strip_number,
     length: opts.length,
     lo_byte: (opts.length * 3) % 256,
     hi_byte: parseInt((opts.length * 3) / 256, 10),
     pixels: new_pixels
-  });
+  };
+
+  this.strips.push(strip_info);
 
   //return the strip ID in case it's needed
-  return strip_number;
+  return strip_info;
 };
 
 //replaces one pixel in a strip
