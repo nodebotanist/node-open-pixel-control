@@ -41,9 +41,7 @@ OPC.prototype.disconnect = function(){
   if(self.opc_client === null){
     throw new Error('You need to connect a board to disconnect it.');
   } else {
-    self.opc_client.end(function(){
-      //the socket is set up to emit a 'disconnected' event already, so no need to add it here.
-    });
+    self.opc_client.end();
   }
 };
 
@@ -55,35 +53,58 @@ OPC.prototype.add_strip = function(opts){
   var strip_number = this.strips.length;
 
   //TODO: Add case when there are too many strips?
+  //init strip
+  var new_pixels = [];
+  for(var i = 0; i < opts.length; i++){
+    new_pixels.push([0, 0, 0]);
+  }
 
   this.strips.push({
     id: strip_number,
     length: opts.length,
     lo_byte: (opts.length * 3) % 256,
-    hi_byte: parseInt((opts.length * 3) / 256, 10)
+    hi_byte: parseInt((opts.length * 3) / 256, 10),
+    pixels: new_pixels
   });
 
   //return the strip ID in case it's needed
   return strip_number;
 };
 
+//replaces one pixel in a strip
+OPC.prototype.put_pixel = function(strip_id, pixel_index, colors){
+  var self = this;
+
+  self.strips[strip_id].pixels[pixel_index] = colors;
+
+  var message = assemble_opc_message(this.strips[strip_id]);
+
+  self.opc_client.write(message, function(){
+    self.emit('data_sent');
+  });
+};
+
+//leave this- replaces all pixels in a strip
 OPC.prototype.put_pixels = function(strip_id, pixels){
-  var self = this,
-      message = assemble_opc_message(this.strips[strip_id], pixels);
+  var self = this;
+
+  self.strips[strip_id].pixels = pixels;
+
+  var message = assemble_opc_message(this.strips[strip_id]);
 
   this.opc_client.write(message, function(){
     self.emit('data_sent');
   });
 };
 
-function assemble_opc_message(strip, pixels){
+function assemble_opc_message(strip){
   //assemble our OPC message header
   var header = String.fromCharCode(strip.id) + String.fromCharCode(0) + String.fromCharCode(strip.hi_byte) + String.fromCharCode(strip.lo_byte);
   var message_pixels = new Uint8ClampedArray(strip.length * 3);
   for(var i = 0; i < strip.length; i++){
-      message_pixels[i*3] = pixels[i][0];
-      message_pixels[(i*3)+1] = pixels[i][1];
-      message_pixels[(i*3)+2] = pixels[i][2];
+      message_pixels[i*3] = strip.pixels[i][0];
+      message_pixels[(i*3)+1] = strip.pixels[i][1];
+      message_pixels[(i*3)+2] = strip.pixels[i][2];
   }
   var message = new Buffer(header);
   message = Buffer.concat([message, new Buffer(message_pixels)]);

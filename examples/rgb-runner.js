@@ -7,7 +7,7 @@ var client = new opc_client({
 
 client.on('connected', function(){
   var strip_id = client.add_strip({
-    length: 26
+    length: 25
   });
 
   var pixels = [
@@ -35,8 +35,7 @@ client.on('connected', function(){
       [0, 0, 0],
       [255, 0, 0],
       [0, 255, 0],
-      [0, 0, 255],
-      [255, 255, 255]
+      [0, 0, 255]
   ],
     new_pixel;
 
