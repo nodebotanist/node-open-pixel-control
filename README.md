@@ -60,7 +60,14 @@ client.on('connected', function(){
     new_pixel;
 ```
 
-client.put_pixels(strip_id, pixels); sends the data to the OPC server.
+client.put_pixel(strip_id, pixel_index, color_data) sets the pixel addressed to the color given (Added 0.0.2 :))
+
+```
+  client.put_pixel(strip_id, 0, [255, 255, 255]);
+
+```
+
+client.put_pixels(strip_id, pixels); sends the data to the OPC server. You send a full array of pixels with this one.
 
 ```
   setTimeout(function(){
@@ -76,5 +83,4 @@ TODO:
 
 * Add tutorial for LEDscape on BeagleBone Black
 * Add tests
-* Add strip caching for put_pixel ~~
 * These docs need some serious <3!

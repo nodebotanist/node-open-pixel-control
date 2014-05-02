@@ -1,6 +1,6 @@
 {
   "name": "open-pixel-control",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An open pixel control messaging library",
   "main": "open-pixel-control.js",
   "scripts": {
