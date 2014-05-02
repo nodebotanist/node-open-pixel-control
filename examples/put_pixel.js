@@ -13,7 +13,7 @@ client.on('connected', function(){
   var i = 0, color = [255, 255, 255];
   setInterval(function(){
 
-    put_pixel(strip.id, i, color);
+    client.put_pixel(strip.id, i, color);
 
     if(i == strip.length){
       i = 0;
