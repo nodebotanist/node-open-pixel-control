@@ -4,7 +4,6 @@
   "description": "An open pixel control messaging library",
   "main": "open-pixel-control.js",
   "scripts": {
-    "test": "npm test"
   },
   "keywords": [
     "OPC",
