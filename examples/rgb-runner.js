@@ -39,7 +39,7 @@ client.on('connected', function(){
   ],
     new_pixel;
 
-  setTimeout(function(){
+  setInterval(function(){
     client.put_pixels(strip.id, pixels);
     new_pixel = pixels[0];
     pixels = pixels.slice(1);
