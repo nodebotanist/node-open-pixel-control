@@ -79,7 +79,7 @@ OPC.prototype.put_pixel = function(strip_id, pixel_index, colors){
 
   self.strips[strip_id].pixels[pixel_index] = colors;
 
-  var message = assemble_opc_message(this.strips[strip_id]);
+  var message = assemble_opc_message();
 
   self.opc_client.write(message, function(){
     self.emit('data_sent');
@@ -92,24 +92,27 @@ OPC.prototype.put_pixels = function(strip_id, pixels){
 
   self.strips[strip_id].pixels = pixels;
 
-  var message = assemble_opc_message(this.strips[strip_id]);
+  var message = assemble_opc_message();
 
   this.opc_client.write(message, function(){
     self.emit('data_sent');
   });
 };
 
-function assemble_opc_message(strip){
+function assemble_opc_message(){
   //assemble our OPC message header
-  var header = String.fromCharCode(strip.id) + String.fromCharCode(0) + String.fromCharCode(strip.hi_byte) + String.fromCharCode(strip.lo_byte);
-  var message_pixels = new Uint8ClampedArray(strip.length * 3);
-  for(var i = 0; i < strip.length; i++){
+  for(var j = 0; j < this.strips.length, j++){
+    var strip = this.strips[j];
+    var header = String.fromCharCode(strip.id) + String.fromCharCode(0) + String.fromCharCode(strip.hi_byte) + String.fromCharCode(strip.lo_byte);
+    var message_pixels = new Uint8ClampedArray(strip.length * 3);
+    for(var i = 0; i < strip.length; i++){
       message_pixels[i*3] = strip.pixels[i][0];
       message_pixels[(i*3)+1] = strip.pixels[i][1];
       message_pixels[(i*3)+2] = strip.pixels[i][2];
+    }
+    var message = new Buffer(header);
+    message = Buffer.concat([message, new Buffer(message_pixels)]);
   }
-  var message = new Buffer(header);
-  message = Buffer.concat([message, new Buffer(message_pixels)]);
   return message;
 }
 
