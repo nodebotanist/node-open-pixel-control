@@ -1,13 +1,13 @@
 var opc_client = require('../open-pixel-control');
 
 var client = new opc_client({
-  address: '127.0.0.1',
+  address: '192.168.1.74',
   port: 7890
 });
 
 client.on('connected', function(){
   var strip = client.add_strip({
-    length: 25
+    length: 1024
   });
 
   var i = 0, color = [255, 255, 255];
