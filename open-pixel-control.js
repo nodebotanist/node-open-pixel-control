@@ -127,16 +127,5 @@ function assemble_opc_message(strip){
   return message;
 }
 
-function send_raw_data(strip_id, pixels_as_int_array){
-  var strip = this.strips[strip_id];
-  header = String.fromCharCode(strip.id) + String.fromCharCode(0) + String.fromCharCode(strip.hi_byte) + String.fromCharCode(strip.lo_byte);
-  console.log(header);
-  message = new Buffer(header);
-  message = Buffer.concat([message, new Buffer(pixels_as_int_array)]);
-  this.opc_client.write(message, function(){
-    // self.emit('data_sent');
-  });
-}
-
 
 module.exports = OPC;
