@@ -14,7 +14,6 @@ function OPC(opts){
   this.port = opts.port;
   this.opc_client = null;
   this.strips = [];
-  this.send_raw_data = send_raw_data;
 }
 
 //LEAVE THIS HERE- if you put extensions after this they will vanish
