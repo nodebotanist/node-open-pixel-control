@@ -121,7 +121,6 @@ function assemble_opc_message(strip){
     }
   }
   message = header;
-  console.log(message);
   message = Buffer.concat([message, new Buffer(message_pixels)]);
   return message;
 }
