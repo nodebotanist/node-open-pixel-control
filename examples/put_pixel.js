@@ -24,4 +24,12 @@ client.on('connected', function(){
   }, 200);
 });
 
+client.on('disconnected', function () {
+  console.log('opc: client disconnected!')
+});
+
+client.on('error', function () {
+  console.log('opc: client error!')
+});
+
 client.connect();
