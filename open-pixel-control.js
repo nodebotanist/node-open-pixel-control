@@ -30,6 +30,10 @@ OPC.prototype.connect = function(){
   self.opc_client.on('end', function(){
     self.emit('disconnected');
   });
+  
+  self.opc_client.on('error', function(){
+    self.emit('error');
+  });
 };
 
 OPC.prototype.disconnect = function(){
